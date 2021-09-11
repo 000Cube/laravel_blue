@@ -30,6 +30,19 @@ Route::get('hello','HelloController@index');
 
 Route::get('hello/other','HelloController@other');
 
+Route::get('hello/view/{id?}','HelloController@view');
+Route::get('hello/query','HelloController@query');
+
+Route::get('hello/blade','HelloController@blade');
+Route::post('hello/blade','HelloController@bladePost');
+
+Route::get('hello/foreach','HelloController@forEach');
+Route::get('hello/for','HelloController@For');
+Route::get('hello/while','HelloController@While');
+
+
 Route::get('single','SingleActionController');
+
+
 
 
