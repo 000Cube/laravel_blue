@@ -11,7 +11,7 @@
 |
 */
 
-
+use App\Http\Middleware\HelloMiddleware;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,7 +26,8 @@ Route::get('/msg/{msg?}', function($msg = 'no message.'){
     return $html;
 });
 
-Route::get('hello','HelloController@index');
+Route::get('hello','HelloController@index')
+->middleware('helo');
 
 Route::get('hello/other','HelloController@other');
 
