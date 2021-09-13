@@ -29,6 +29,10 @@ Route::get('/msg/{msg?}', function($msg = 'no message.'){
 Route::get('hello','HelloController@index')
 ->middleware('helo');
 
+Route::post('hello','HelloController@post')
+->middleware('helo');
+
+
 Route::get('hello/other','HelloController@other');
 
 Route::get('hello/view/{id?}','HelloController@view');
