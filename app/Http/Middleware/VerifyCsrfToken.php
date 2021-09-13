@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        //指定したURLのcsrfトークンが向こうになる
+        'hello'
     ];
 }
