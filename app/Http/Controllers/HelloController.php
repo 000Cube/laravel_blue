@@ -6,17 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\HelloRequest;
 use App\Http\Requests\CookieRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class HelloController extends Controller
 {
     public function index(Request $request){
-        if($request->hasCookie('msg')){
-            $msg = 'COOKIE:'.$request->cookie('msg');
-        } else {
-            $msg = '※クッキーはありません。';
-        }
-        return view('hello.index',['msg' => $msg]);
+        $items = DB::table('people')->get();
+        return view('hello.index',['items' => $items]);
     }
 
     public function post(CookieRequest $request){
@@ -26,6 +23,65 @@ class HelloController extends Controller
         ]));
         $response->cookie('msg',$msg,100);
         return $response;
+    }
+
+    public function show(Request $request){
+        $name = $request->name;
+        $min = $request->min;
+        $max = $request->max;
+        $page = $request->page;
+
+        $items = DB::table('people')
+                ->get();
+
+        return view('hello.show',['items' => $items]);
+    }
+
+    public function add(){
+        return view('hello.add');
+    }
+
+    public function create(Request $request){
+        $param = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'age' => $request->age,
+        ];
+
+        DB::table('people')->insert($param);
+        return redirect('/hello');
+    }
+
+    public function edit(Request $request){
+        $id = $request->id;
+        $item = DB::table('people')->where('id',$id)->first();
+        return view('hello.edit',['form' => $item]);
+    }
+
+    public function update(Request $request){
+        $param = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'age' => $request->age
+        ];
+
+        DB::table('people')
+        ->where('id',$request->id)
+        ->update($param);
+        return redirect('/hello');
+    }
+
+    public function delete(Request $request){
+        $id = $request->id;
+        $item = DB::table('people')->where('id',$id)->first();
+        return view('hello.del',['form' => $item]);
+    }
+
+    public function remove(Request $request){
+        DB::table('people')
+        ->where('id',$request->id)
+        ->delete();
+        return redirect('/hello');
     }
 
     public function other(){
