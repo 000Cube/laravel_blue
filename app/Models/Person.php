@@ -23,6 +23,10 @@ class Person extends Model
         static::addGlobalScope(new ScopePerson);
     }
 
+    public function boards(){
+        return $this->hasMany('App\Models\Board');
+    }
+
     public function getData(){
         return "{$this->id}:{$this->name}({$this->age})";
     }

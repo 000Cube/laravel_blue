@@ -9,9 +9,13 @@ class PersonController extends Controller
 {
     public function index(Request $request){
 
-        $items = Person::all();
-
-        return view('person.index',['items' => $items]);
+        $hasItems = Person::with('boards')->has('boards')->get();
+        $noItems = Person::doesntHave('boards')->get();
+        $param = [
+            'hasItems' => $hasItems,
+            'noItems' => $noItems
+        ];
+        return view('person.index',$param);
     }
 
     public function find(Request $request){
@@ -53,7 +57,7 @@ class PersonController extends Controller
     public function update(Request $request){
         //モデルに記述したルールでバリデーションをかける
         $this->validate($request, Person::$rules);
-        //リクエストで送られてきたidのレコードを取得
+        //リクエストで送られてきたidを持つレコードを取得
         $person = Person::find($request->id);
         //リクエストで送られてきた値を全て取得
         $form = $request->all();

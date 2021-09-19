@@ -27,6 +27,13 @@ Route::get('/msg/{msg?}', function($msg = 'no message.'){
     return $html;
 });
 
+//board
+Route::get('board','BoardController@index');
+
+Route::get('board/add','BoardController@add');
+Route::post('board/add','BoardController@create');
+
+//person
 Route::get('person','PersonController@index');
 Route::get('person/find','PersonController@find');
 Route::post('person/find','PersonController@search');
