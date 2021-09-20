@@ -49,11 +49,9 @@ Route::post('person/edit','PersonController@update');
 Route::get('person/del','PersonController@delete');
 Route::post('person/del','PersonController@remove');
 
-Route::get('hello','HelloController@index')
-->middleware('helo');
+Route::get('hello','HelloController@index');
 
-Route::post('hello','HelloController@post')
-->middleware('helo');
+Route::post('hello','HelloController@post');
 
 //CRUD
 Route::get('hello/show','HelloController@show');
@@ -64,6 +62,9 @@ Route::post('hello/edit','HelloController@update');
 Route::get('hello/del','HelloController@delete');
 Route::post('hello/del','HelloController@remove');
 
+//session
+Route::get('hello/session','HelloController@ses_get');
+Route::post('hello/session','HelloController@ses_put');
 
 Route::get('hello/other','HelloController@other');
 

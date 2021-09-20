@@ -9,7 +9,13 @@
 
 @section('content')
 <table>
-    <tr><th>Name</th><th>Mail</th><th>Age</th><th>update</th><th>delete</th></tr>
+    <tr>
+        <th><a href="/hello?sort=name">Name</a></th>
+        <th><a href="/hello?sort=email">Mail</a></th>
+        <th><a href="/hello?sort=age">Age</a></th>
+        <th>update</th>
+        <th>delete</th>
+    </tr>
     @foreach($items as $item)
         <tr>
             <td>{{$item->name}}</td>
@@ -20,6 +26,7 @@
         </tr>
         @endforeach
 </table>
+{{$items->appends(['sort' => $sort])->links()}}
 @endsection
 
 @section('footer')

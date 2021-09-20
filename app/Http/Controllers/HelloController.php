@@ -8,12 +8,14 @@ use App\Http\Requests\HelloRequest;
 use App\Http\Requests\CookieRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Person;
 
 class HelloController extends Controller
 {
     public function index(Request $request){
-        $items = DB::table('people')->get();
-        return view('hello.index',['items' => $items]);
+        $sort = $request->sort;
+        $items = Person::orderBy($sort,'asc')->paginate(5);
+        return view('hello.index',['items' => $items, 'sort' => $sort]);
     }
 
     public function post(CookieRequest $request){
@@ -23,6 +25,17 @@ class HelloController extends Controller
         ]));
         $response->cookie('msg',$msg,100);
         return $response;
+    }
+
+    public function ses_get(Request $request){
+        $sesdata = $request->session()->get('msg');
+        return view('hello.session',['session_data' => $sesdata]);
+    }
+
+    public function ses_put(Request $request){
+        $msg = $request->input;
+        $request->session()->put('msg',$msg);
+        return redirect('hello/session');
     }
 
     public function rest(){
