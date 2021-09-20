@@ -25,6 +25,10 @@ class HelloController extends Controller
         return $response;
     }
 
+    public function rest(){
+        return view('hello.rest');
+    }
+
     public function show(Request $request){
         $name = $request->name;
         $min = $request->min;

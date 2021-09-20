@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\HelloController;
+use App\Http\Controllers\RestappController;
 use App\Http\Middleware\HelloMiddleware;
 
 Route::get('/', function () {
@@ -26,6 +27,9 @@ Route::get('/msg/{msg?}', function($msg = 'no message.'){
 
     return $html;
 });
+
+//RestFull
+Route::resource('rest','RestappController');
 
 //board
 Route::get('board','BoardController@index');
@@ -72,6 +76,8 @@ Route::post('hello/blade','HelloController@bladePost');
 Route::get('hello/foreach','HelloController@forEach');
 Route::get('hello/for','HelloController@For');
 Route::get('hello/while','HelloController@While');
+
+Route::get('hello/rest','HelloController@rest');
 
 
 Route::get('single','SingleActionController');
